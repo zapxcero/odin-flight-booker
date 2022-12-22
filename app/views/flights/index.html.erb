@@ -1,0 +1,9 @@
+<h1>Flights</h1>
+<%= form_with url: root_path, method: :get do |form| %>
+  <%= form.label :departure_airport %>
+  <%= form.collection_select :departure_airport_id, Airport.order(:code), :id, :code %>
+  <%= form.label :arrival_airport %>
+  <%= form.collection_select :arrival_airport_id, Airport.order(:code), :id, :code %>
+  <%= form.label :date %>
+  <%= form.collection_select :date, Flight.order(:start).pluck(:start).uniq, :itself, :itself%>
+<% end %>
