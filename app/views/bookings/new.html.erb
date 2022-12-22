@@ -1,2 +1,21 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
+<h1>Bookings</h1>
+<%= form_with model: @booking do |form|%>
+  <%= @flight.date %>
+  <%= @flight.departure_airport.code %>
+  <%= @flight.arrival_airport.code %>
+  <%= params[:ticket]%>
+  <%= form.hidden_field :flight_id, value: @flight.id %>
+  <br>
+  <%= form.fields_for :passengers do |passenger| %>
+    <br>
+    <div>
+      <%= passenger.label :name %>
+      <%= passenger.text_field :name %>
+    </div>
+    <div>
+      <%= passenger.label :email %>
+      <%= passenger.text_field :email %>
+    </div>
+  <% end %>
+  <%= form.submit "Book Flight" %>
+<% end %>
