@@ -1,9 +1,20 @@
 <h1>Flights</h1>
 <%= form_with url: root_path, method: :get do |form| %>
   <%= form.label :departure_airport %>
-  <%= form.collection_select :departure_airport_id, Airport.order(:code), :id, :code %>
+  <%= form.collection_select :departure_airport_id, Airport.all, :id, :code %>
   <%= form.label :arrival_airport %>
-  <%= form.collection_select :arrival_airport_id, Airport.order(:code), :id, :code %>
+  <%= form.collection_select :arrival_airport_id, Airport.all, :id, :code %>
   <%= form.label :date %>
-  <%= form.collection_select :date, Flight.order(:start).pluck(:start).uniq, :itself, :itself%>
+  <%= form.collection_select :date, Flight.order(:date).pluck(:date).uniq, :itself, :itself%>
+  <%= form.label :ticket %>
+  <%= form.select :ticket, options_for_select([1,2,3,4]) %>
+  <%= form.submit "Search" %>
+<% end %>
+<% if @flights.any? %>
+  <%= form_with url: new_booking_path, method: :get do |form|%>
+    <%= form.collection_radio_buttons :flight_id, @flights, :id, :date %>
+    <%= form.submit "Book" %>
+  <% end %>
+<% else %>
+  <p>No flights found</p>
 <% end %>
